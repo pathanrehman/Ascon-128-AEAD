@@ -1,56 +1,53 @@
 # Tiny Tapeout project information
 project:
-  title:        ""      # Project title
-  author:       ""      # Your name
+  title:        "Ascon-128 AEAD Lightweight Cryptography Core"      # Project title
+  author:       "Your Name"      # Your name
   discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
-  description:  ""      # One line description of what your project does
+  description:  "Hardware implementation of NIST-standardized Ascon-128 AEAD lightweight encryption algorithm for IoT and constrained devices"      # One line description of what your project does
   language:     "Verilog" # other examples include SystemVerilog, Amaranth, VHDL, etc
-  clock_hz:     0       # Clock frequency in Hz (or 0 if not applicable)
-
+  clock_hz:     25000000       # Clock frequency in Hz (25 MHz for efficient crypto operations)
   # How many tiles your design occupies? A single tile is about 167x108 uM.
   tiles: "1x1"          # Valid values: 1x1, 1x2, 2x2, 3x2, 4x2, 6x2 or 8x2
-
   # Your top module name must start with "tt_um_". Make it unique by including your github username:
-  top_module:  "tt_um_example"
-
+  top_module:  "tt_um_ascon_aead"
   # List your project's source files here.
   # Source files must be in ./src and you must list each source file separately, one per line.
   # Don't forget to also update `PROJECT_SOURCES` in test/Makefile.
   source_files:
-    - "project.v"
+    - "ascon_aead.v"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 # This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
 pinout:
   # Inputs
-  ui[0]: ""
-  ui[1]: ""
-  ui[2]: ""
-  ui[3]: ""
-  ui[4]: ""
-  ui[5]: ""
-  ui[6]: ""
-  ui[7]: ""
-
+  ui[0]: "START_OP"        # Start encryption/decryption operation
+  ui[1]: "MODE_0"          # Operation mode bit 0 (00=encrypt, 01=decrypt)
+  ui[2]: "MODE_1"          # Operation mode bit 1
+  ui[3]: "DATA_VALID"      # Input data valid signal
+  ui[4]: "RESET_STATE"     # Reset internal cryptographic state
+  ui[5]: ""                # Reserved for future use
+  ui[6]: ""                # Reserved for future use
+  ui[7]: ""                # Reserved for future use
+  
   # Outputs
-  uo[0]: ""
-  uo[1]: ""
-  uo[2]: ""
-  uo[3]: ""
-  uo[4]: ""
-  uo[5]: ""
-  uo[6]: ""
-  uo[7]: ""
-
+  uo[0]: "DATA_READY"      # Output data ready signal
+  uo[1]: "OP_COMPLETE"     # Operation complete flag
+  uo[2]: "OUT_DATA_0"      # Output data bit 0
+  uo[3]: "OUT_DATA_1"      # Output data bit 1
+  uo[4]: "OUT_DATA_2"      # Output data bit 2
+  uo[5]: "OUT_DATA_3"      # Output data bit 3
+  uo[6]: "OUT_DATA_4"      # Output data bit 4
+  uo[7]: "OUT_DATA_5"      # Output data bit 5
+  
   # Bidirectional pins
-  uio[0]: ""
-  uio[1]: ""
-  uio[2]: ""
-  uio[3]: ""
-  uio[4]: ""
-  uio[5]: ""
-  uio[6]: ""
-  uio[7]: ""
+  uio[0]: "DATA_IO_0"      # Bidirectional data bus bit 0 (key/nonce/plaintext/ciphertext)
+  uio[1]: "DATA_IO_1"      # Bidirectional data bus bit 1
+  uio[2]: "DATA_IO_2"      # Bidirectional data bus bit 2
+  uio[3]: "DATA_IO_3"      # Bidirectional data bus bit 3
+  uio[4]: "DATA_IO_4"      # Bidirectional data bus bit 4
+  uio[5]: "DATA_IO_5"      # Bidirectional data bus bit 5
+  uio[6]: "DATA_IO_6"      # Bidirectional data bus bit 6
+  uio[7]: "DATA_IO_7"      # Bidirectional data bus bit 7
 
 # Do not change!
 yaml_version: 6
